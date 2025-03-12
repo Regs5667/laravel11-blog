@@ -8,8 +8,9 @@
                 <h1 class="mb-4 fw-bold text-gradient">Detail Blog</h1>
                 <h3 class="fw-bold text-primary">{{ $blog->title }}</h3>
                 <p class="text-muted mt-3">{{ $blog->description }}</p>
-                <p class="text-muted mt-3">{{ $blog->created_at->format('d M Y, H:i') }}</p>
-            </div>
+                <p class="text-muted mb-1">
+                    {{ $blog->created_at?->format('d M Y, H:i') ?? 'N/A' }}
+                </p>            </div>
             <div class="mt-3">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -39,6 +40,26 @@
                         <a href="{{ route('blog') }}" class="btn btn-primary px-4">🔙 Kembali</a>
                     </div>
                 </form>
+                <div class="mt-4">
+                    @if ($blog->comments->count() == 0)
+                    <div class="card shadow-sm p-3 mb-3">
+                        <div class="card-body">
+                            <h1>No Comment</h1>
+                        </div>
+                    </div>
+                @endif
+
+                    @foreach ($blog->comments as $item)
+                    <div class="card shadow-sm p-3 mb-3">
+                        <div class="card-body">
+                            <p class="text-muted mb-1">
+                                {{ $item->created_at?->format('d M Y, H:i') ?? 'N/A' }}
+                            </p>
+                            <p>{{ $item->comment }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

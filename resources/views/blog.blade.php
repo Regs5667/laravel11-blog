@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <h1 class="text-center mb-5">data dari controller blog:</h1>
+    <h1 class="text-center mb-5">BLOG</h1>
     <div class="container">
         <form action="" method="GET" class="mb-5">
             @csrf
@@ -36,7 +36,9 @@
                     <tr>
                         <td scope="row">{{ ($data->currentpage() - 1) * $data->perpage() + $loop->index + 1 }}</td>
                         <td>{{ $item->title }}</td>
-                        <td>{{ $item->description }}</td>
+                        <td class="description" title="{{ $item->description }}">
+                            {{ Str::limit($item->description, 50) }}
+                        </td>
                         <td>
                             <a href="{{ url('/blog/' . $item->id . '/show') }}"
                                 class="btn btn-secondary text-white">view</a> |

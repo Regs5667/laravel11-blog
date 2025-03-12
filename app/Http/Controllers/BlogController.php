@@ -39,7 +39,7 @@ class BlogController extends Controller
         //     'description' => $request->description
         // ]);
 
-      Blog::create(request()->all());
+        Blog::create(request()->all());
 
         return redirect()->route('blog')->with('success', 'Data berhasil ditambahkan!');;
     }
@@ -47,7 +47,7 @@ class BlogController extends Controller
     public function show($id)
     {
         // $blog = DB::table('blogs')->where('id', $id)->first();
-        $blog = Blog::findorFail($id);
+        $blog = Blog::with('comments')->findorFail($id);
 
         return view('detail_blog', compact('blog'));
     }
