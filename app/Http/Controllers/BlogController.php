@@ -40,8 +40,8 @@ class BlogController extends Controller
         //     'description' => $request->description
         // ]);
 
-       $blogs = Blog::create(request()->all());
-       $blogs ->tags()->attach($request->tags);
+        $blogs = Blog::create(request()->all());
+        $blogs->tags()->attach($request->tags);
 
         return redirect()->route('blog')->with('success', 'Data berhasil ditambahkan!');;
     }
@@ -56,30 +56,34 @@ class BlogController extends Controller
 
     public function edit($id)
     {
-        $blog = DB::table('blogs')->where('id', $id)->first();
-        return view('edit_blog', compact('blog'));
+        $tags = Tag::all();
+        $blog = Blog::with(['tags'])->where('id', $id)->first();
+        return view('edit_blog', compact('blog', 'tags'));
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'title' => 'required|unique:blogs|max:255',
+            'title' => 'required|max:255',
             'description' => 'required',
         ], [
             'title.required' => 'Mohon isi Judul',
-            'title.unique' => 'Judul sudah Ada',
-            'title.max' => 'Judul tidak Boleh lebih dari 255 character',
-            'description.required' => 'Deskripsi Wajib Di isi',
+            'title.unique' => 'Judul sudah ada',
+            'title.max' => 'Judul tidak boleh lebih dari 255 karakter',
+            'description.required' => 'Deskripsi wajib diisi',
         ]);
-        // DB::table('blogs')->where('id', $id)->update([
-        //     'title' => $request->title,
-        //     'description' => $request->description
 
-        // ]);
+        // Cari blog berdasarkan ID dan update langsung
+        $blog = Blog::findOrFail($id);
+        $blog->update($validated);
 
-        Blog::findorFail($id)->update(request()->all());
+        // Update tags dengan `sync()`, tidak perlu `detach()`
+        $blog->tags()->sync($request->tags ?? []);
+
         return redirect()->route('blog')->with('success', 'Data berhasil diubah!');
     }
+
+
     public function delete($id)
     {
         // DB::table('blogs')->where('id', $id)->delete();

@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="row">
-                <label for="inputdescription3" class="col-sm-2 col-form-label">description</label>
+                <label for="inputdescription3" class="col-sm-2 col-form-label">tags :</label>
                 <div class="col-sm-10">
                     <div class="d-flex flex-wrap gap-2">
                         @foreach ($tags as $tag)
