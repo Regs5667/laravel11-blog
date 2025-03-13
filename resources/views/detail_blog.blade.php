@@ -10,7 +10,15 @@
                 <p class="text-muted mt-3">{{ $blog->description }}</p>
                 <p class="text-muted mb-1">
                     {{ $blog->created_at?->format('d M Y, H:i') ?? 'N/A' }}
-                </p>            </div>
+                </p>
+            </div>
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                @foreach ($blog->tags as $tag)
+                    <span class="badge bg-secondary rounded-pill text-white">
+                        {{ $tag->name }}
+                    </span>
+                @endforeach
+            </div>
             <div class="mt-3">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -27,7 +35,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <form action="{{ url('/comment/'.$blog-> id) }}" class="form-horizontal w-100" method="POST">
+                <form action="{{ url('/comment/' . $blog->id) }}" class="form-horizontal w-100" method="POST">
                     @csrf
                     <div class="form-group row">
                         <label for="comment" class="col-sm-2 col-form-label text-start">Comments:</label>
@@ -42,22 +50,22 @@
                 </form>
                 <div class="mt-4">
                     @if ($blog->comments->count() == 0)
-                    <div class="card shadow-sm p-3 mb-3">
-                        <div class="card-body">
-                            <h1>No Comment</h1>
+                        <div class="card shadow-sm p-3 mb-3">
+                            <div class="card-body">
+                                <h1>No Comment</h1>
+                            </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
 
                     @foreach ($blog->comments as $item)
-                    <div class="card shadow-sm p-3 mb-3">
-                        <div class="card-body">
-                            <p class="text-muted mb-1">
-                                {{ $item->created_at?->format('d M Y, H:i') ?? 'N/A' }}
-                            </p>
-                            <p>{{ $item->comment }}</p>
+                        <div class="card shadow-sm p-3 mb-3">
+                            <div class="card-body">
+                                <p class="text-muted mb-1">
+                                    {{ $item->created_at?->format('d M Y, H:i') ?? 'N/A' }}
+                                </p>
+                                <p>{{ $item->comment }}</p>
+                            </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             </div>

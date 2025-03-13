@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,12 +20,12 @@ class BlogController extends Controller
 
     public function add()
     {
-        return view('add_blog');
+        $tags = Tag::all();
+        return view('add_blog', compact('tags'));
     }
 
     public function create(Request $request)
     {
-        // $data = $request->all();
         $validated = $request->validate([
             'title' => 'required|unique:blogs|max:255',
             'description' => 'required',
@@ -39,7 +40,8 @@ class BlogController extends Controller
         //     'description' => $request->description
         // ]);
 
-        Blog::create(request()->all());
+       $blogs = Blog::create(request()->all());
+       $blogs ->tags()->attach($request->tags);
 
         return redirect()->route('blog')->with('success', 'Data berhasil ditambahkan!');;
     }
@@ -47,8 +49,8 @@ class BlogController extends Controller
     public function show($id)
     {
         // $blog = DB::table('blogs')->where('id', $id)->first();
-        $blog = Blog::with('comments')->findorFail($id);
-
+        $blog = Blog::with(['comments', 'tags'])->findorFail($id);
+        // return $blog;
         return view('detail_blog', compact('blog'));
     }
 

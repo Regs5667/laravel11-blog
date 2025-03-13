@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Blog extends Model
@@ -22,5 +23,15 @@ class Blog extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class)->orderByDesc('created_at');
+    }
+
+    /**
+     * The tags that belong to the Blog
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
