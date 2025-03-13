@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
@@ -12,21 +13,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/blog', [BlogController::class, 'index'])->name('blog');
-Route::get('/blog/add', [BlogController::class, 'add']);
-Route::post('/blog/create', [BlogController::class, 'create']);
-Route::get('/blog/{id}/show', [BlogController::class, 'show'])->name('detail_blog');
-Route::get('/blog/{id}/edit', [BlogController::class, 'edit']);
-Route::put('/blog/{id}/update', [BlogController::class, 'update']);
-Route::get('/blog/{id}/delete', [BlogController::class, 'delete']);
-Route::get('/user', [UserController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+    Route::get('/blog/add', [BlogController::class, 'add']);
+    Route::post('/blog/create', [BlogController::class, 'create']);
+    Route::get('/blog/{id}/show', [BlogController::class, 'show'])->name('detail_blog');
+    Route::get('/blog/{id}/edit', [BlogController::class, 'edit']);
+    Route::put('/blog/{id}/update', [BlogController::class, 'update']);
+    Route::get('/blog/{id}/delete', [BlogController::class, 'delete']);
+    Route::get('/user', [UserController::class, 'index']);
 
-Route::get('/phone', function (){
-    return Phone::with('user')->get();
+    Route::get('/phone', function () {
+        return Phone::with('user')->get();
+    });
+
+
+    Route::post('/comment/{id}', [CommentController::class, 'index'])->name('comment');
+    // Route::get('/comment',function (){
+    //     return Comment::with('blog')->get();
+    // });
+    Route::post('/logout', [AuthController::class, 'AuthLogout'])->name('logout');
 });
 
-
-Route::post('/comment/{id}', [CommentController::class, 'index'])->name('comment');
-// Route::get('/comment',function (){
-//     return Comment::with('blog')->get();
-// });
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
+    Route::post('/login', [AuthController::class, 'AuthLogin']);
+});

@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('content')
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <div class="d-flex justify-content-end p-3">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </div>
+    </form>
     <h1 class="text-center mb-5">BLOG</h1>
+
     <div class="container">
         <form action="" method="GET" class="mb-5">
             @csrf
@@ -44,11 +51,10 @@
                                 class="btn btn-secondary text-white">view</a> |
                             <a href="{{ url('/blog/' . $item->id . '/edit') }}" class="btn btn-primary text-white">edit</a>
                             |
-                            <a href="{{ url('/blog/' . $item->id . '/delete') }}"
-                                class="btn btn-danger text-white"
+                            <a href="{{ url('/blog/' . $item->id . '/delete') }}" class="btn btn-danger text-white"
                                 onclick="return confirm('Apakah Anda yakin ingin menghapus {{ $item->title }}?')">
                                 Delete
-                             </a>
+                            </a>
 
                         </td>
                     </tr>

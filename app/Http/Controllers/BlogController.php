@@ -73,11 +73,12 @@ class BlogController extends Controller
             'description.required' => 'Deskripsi wajib diisi',
         ]);
 
-        // Cari blog berdasarkan ID dan update langsung
+
+
         $blog = Blog::findOrFail($id);
         $blog->update($validated);
 
-        // Update tags dengan `sync()`, tidak perlu `detach()`
+
         $blog->tags()->sync($request->tags ?? []);
 
         return redirect()->route('blog')->with('success', 'Data berhasil diubah!');
