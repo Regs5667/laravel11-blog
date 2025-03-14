@@ -11,6 +11,9 @@
                 <p class="text-muted mb-1">
                     {{ $blog->created_at?->format('d M Y, H:i') ?? 'N/A' }}
                 </p>
+                <p class="text-muted mb-1">
+                    Dibuat oleh {{ $item->author->name ?? 'Anonymous' }}
+                </p>
             </div>
             <div class="d-flex flex-wrap gap-2 justify-content-center">
                 @foreach ($blog->tags as $tag)

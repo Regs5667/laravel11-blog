@@ -14,7 +14,7 @@ class BlogController extends Controller
 
         $title = $request->title;
         // $blogs = DB::table('blogs')->where('title', 'LIKE', '%' . $title . '%')->orderBy('id', 'desc')->paginate(4);
-        $blogs = Blog::where('title', 'LIKE', '%' . $title . '%')->orderBy('id', 'desc')->paginate(4);
+        $blogs = Blog::with('author')->where('title', 'LIKE', '%' . $title . '%')->orderBy('id', 'desc')->paginate(4);
         return view('blog', ['data' => $blogs, 'title' => $title]);
     }
 

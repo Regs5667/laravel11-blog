@@ -31,6 +31,7 @@
                 <tr>
                     <th>No</th>
                     <th>Title</th>
+                    <th>Author</th>
                     <th>Description</th>
                     <th>Action</th>
                 </tr>
@@ -43,6 +44,7 @@
                     <tr>
                         <td scope="row">{{ ($data->currentpage() - 1) * $data->perpage() + $loop->index + 1 }}</td>
                         <td>{{ $item->title }}</td>
+                        <td>{{ $item->author->name ?? 'Anonymous'  }}</td>
                         <td class="description" title="{{ $item->description }}">
                             {{ Str::limit($item->description, 50) }}
                         </td>
