@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class BlogController extends Controller
 {
@@ -58,6 +59,17 @@ class BlogController extends Controller
     {
         $tags = Tag::all();
         $blog = Blog::with(['tags'])->where('id', $id)->first();
+        // if (!Gate::allows('update-blog', $blog)) {
+        //     abort(403);
+        // }
+
+        $response = Gate::inspect('update-blog', $blog);
+
+        if ($response->allowed()) {
+            // The action is authorized...
+        } else {
+           abort(403,'You must be an author.');
+        }
         return view('edit_blog', compact('blog', 'tags'));
     }
 
