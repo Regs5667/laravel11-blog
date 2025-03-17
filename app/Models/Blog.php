@@ -15,6 +15,7 @@ class Blog extends Model
     protected $fillable = [
         'title',
         'description',
+        'image',
     ];
  /**
      * Get all of the comments for the Blog

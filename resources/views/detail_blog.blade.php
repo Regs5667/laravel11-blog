@@ -14,6 +14,11 @@
                 <p class="text-muted mb-1">
                     Dibuat oleh {{ $item->author->name ?? 'Anonymous' }}
                 </p>
+                @if (!empty($blog->image))
+                    <img src="{{ asset($blog->image) }}" alt="Blog Image" class="img-fluid">
+                @else
+                    <p class="text-danger">Gambar belum tersedia</p>
+                @endif
             </div>
             <div class="d-flex flex-wrap gap-2 justify-content-center">
                 @foreach ($blog->tags as $tag)

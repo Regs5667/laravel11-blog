@@ -7,8 +7,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\Comment;
 use App\Models\Phone;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,4 +42,27 @@ Route::get('/phone', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'AuthLogin']);
+});
+
+
+Route::get('/upload-image', function () {
+    return view('uploads');
+});
+
+// Route::post('/upload-image', function (Request $request) {
+//     $file = $request->file('file-test');
+//    $ceknama =$file->hashName();
+//    $cekext = $file->extension();
+//    return $cekext;
+//     $path = Storage::putFile('images', $request->file('file-test'));
+//     return $path;
+// });
+
+
+Route::get('/file-show', function () {
+    // return asset('storage/example.txt');
+    // return Storage::url('example3.pdf');
+    // return Storage::get('example3.pdf');
+    //  return Storage::size('example3.pdf');
+    return Storage::lastModified('example3.pdf');
 });
