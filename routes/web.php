@@ -5,11 +5,14 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTokenIsValid;
+use App\Jobs\processWelcomeMail;
+use App\Mail\WelcomeMail;
 use App\Models\Comment;
 use App\Models\Phone;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,4 +68,27 @@ Route::get('/file-show', function () {
     // return Storage::get('example3.pdf');
     //  return Storage::size('example3.pdf');
     return Storage::lastModified('example3.pdf');
+});
+
+
+Route::get('/test-send', function () {
+    $dataList = [
+        ['name' => 'Rohmat', 'email' => 'bayu@example.com'],
+        ['name' => 'Siti', 'email' => 'siti@example.com'],
+        ['name' => 'Budi', 'email' => 'budi@example.com'],
+        ['name' => 'Ani', 'email' => 'ani@example.com'],
+        ['name' => 'Dika', 'email' => 'dika@example.com'],
+        ['name' => 'Lina', 'email' => 'lina@example.com'],
+        ['name' => 'Andi', 'email' => 'andi@example.com'],
+        ['name' => 'Tina', 'email' => 'tina@example.com'],
+        ['name' => 'Faisal', 'email' => 'faisal@example.com'],
+        ['name' => 'Nina', 'email' => 'nina@example.com'],
+        ['name' => 'Joko', 'email' => 'joko@example.com']
+    ];
+
+
+    foreach ($dataList as $user) {
+        //    Mail::to($user['email'])->send(new WelcomeMail($user));
+        processWelcomeMail::dispatch($user);
+    }
 });
