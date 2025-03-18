@@ -22,7 +22,7 @@
 
     <body>
         <div class="login-container">
-            <h3 class="text-center mb-4">Login</h3>
+            <h3 class="text-center mb-4">Register</h3>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -32,8 +32,13 @@
                     </ul>
                 </div>
             @endif
-            <form action="/login" method="POST">
+            <form action="/register" method="POST">
                 @csrf
+                <div class="mb-3">
+                    <label for="name" class="form-label">name</label>
+                    <input name="name" type="name" class="form-control" id="name" placeholder="Enter your name"
+                        required>
+                </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email"
@@ -44,12 +49,12 @@
                     <input name="password" type="password" class="form-control" id="password"
                         placeholder="Enter your password" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
             </form>
 
             <div class="text-center mt-3 d-flex gap-3 justify-content-center">
                 <a href="#" class="text-decoration-none">Lupa password</a> |
-                <a href="/register" class="text-decoration-none">Register</a>
+                <a href="/login" class="text-decoration-none">Login</a>
             </div>
         </div>
     </body>
