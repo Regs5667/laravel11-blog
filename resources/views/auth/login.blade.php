@@ -49,7 +49,8 @@
 
             <div class="text-center mt-3 d-flex gap-3 justify-content-center">
                 <a href="#" class="text-decoration-none">Lupa password</a> |
-                <a href="/register" class="text-decoration-none">Register</a>
+                <a href="/register" class="text-decoration-none">Register</a> |
+                <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot Password</a>
             </div>
         </div>
     </body>
