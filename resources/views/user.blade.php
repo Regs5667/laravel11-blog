@@ -25,7 +25,7 @@
                     <th>No</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Phone</th>
+                    <th>Phones</th>
                 </tr>
             </thead>
             <tbody>
